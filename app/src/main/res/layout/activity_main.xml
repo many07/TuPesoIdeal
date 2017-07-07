@@ -34,8 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_width="0dp"
             android:layout_weight="2"
-            android:entries="@array/unidad_de_medida_peso"
-            android:prompt="@string/entrada"/>
+            android:entries="@array/unidad_de_medida_peso"/>
     </LinearLayout>
     <TextView
         style="@style/titulos"
@@ -72,7 +71,7 @@
             android:hint="@string/hint_estatura_pulgs"
             android:inputType="numberDecimal"
             android:id="@+id/estatura_pulgs_entry"
-            android:visibility="gone"/>/>
+            android:visibility="gone"/>
         <Spinner
             android:id="@+id/spinner_estatura"
             android:layout_height="wrap_content"
@@ -83,7 +82,7 @@
     </LinearLayout>
     <TextView
         style="@style/titulos"
-        android:text="Complexión"
+        android:text="@string/complexion"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
@@ -152,7 +151,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/titulo_peso_recomendado"/>
+                android:text="@string/titulo_masa_recomendada"/>
             <TextView
                 style="@style/titulo_resultados"
                 android:text=""

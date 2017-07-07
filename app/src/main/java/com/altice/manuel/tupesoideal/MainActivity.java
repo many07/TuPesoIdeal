@@ -1,8 +1,10 @@
 package com.altice.manuel.tupesoideal;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
@@ -38,13 +40,7 @@ public class MainActivity extends AppCompatActivity{
         spinnerMasa.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(position == 1){
-                    masaEnLibras = true;
-                    Toast.makeText(MainActivity.this, "Masa en Libras", Toast.LENGTH_SHORT).show();
-                }else{
-                    masaEnLibras = false;
-                    Toast.makeText(MainActivity.this, "Masa en Kilogramos", Toast.LENGTH_SHORT).show();
-                }
+                masaEnLibras = position == 1;
             }
 
             @Override
@@ -78,21 +74,30 @@ public class MainActivity extends AppCompatActivity{
         botonResultados.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Se toman los datos de altura ingresados por el usuario
+                //Se esconde el teclado una clickeado el botón
+                hideKeyboard(MainActivity.this);
+                resultados.setVisibility(View.GONE);
                 double estatura;
-                if(estaturaEnPies){
-                    EditText estaturaPiesEntry = (EditText) findViewById(R.id.estatura_pies_entry);
-                    EditText estaturaPulgsEntry = (EditText) findViewById(R.id.estatura_pulgs_entry);
-                    int pies = Integer.parseInt(estaturaPiesEntry.getText().toString());
-                    int pulgs = Integer.parseInt(estaturaPulgsEntry.getText().toString());
+                //Se toman los datos de estatura ingresados por el usuario
+                try {
+                    if(estaturaEnPies){
+                        EditText estaturaPiesEntry = (EditText) findViewById(R.id.estatura_pies_entry);
+                        EditText estaturaPulgsEntry = (EditText) findViewById(R.id.estatura_pulgs_entry);
+                        int pies = Integer.parseInt(estaturaPiesEntry.getText().toString());
+                        int pulgs = Integer.parseInt(estaturaPulgsEntry.getText().toString());
 
-                    estatura = (pies*12)+pulgs;
-                    estatura = estatura*0.0254;
+                        estatura = (pies*12)+pulgs;
+                        estatura = estatura*0.0254;
 
-                }else{
-                    EditText estaturaEntry = (EditText) findViewById(R.id.estatura_mts_entry);
-                    estatura = Double.parseDouble(estaturaEntry.getText().toString());
+                    }else{
+                        EditText estaturaEntry = (EditText) findViewById(R.id.estatura_mts_entry);
+                        estatura = Double.parseDouble(estaturaEntry.getText().toString());
+                    }
+                }catch (Exception e){
+                    Toast.makeText(MainActivity.this, "Debes ingresar tu estatura",Toast.LENGTH_SHORT).show();
+                    return;
                 }
+
 
 
                 //Se toman los datos de masa ingresados por el usuario
@@ -142,6 +147,16 @@ public class MainActivity extends AppCompatActivity{
                 pesoRecomendado.setText("Entre "+String.valueOf(minimoRecomendado).substring(0,7)+" "+unidad+" y "+String.valueOf(maximoRecomendado).substring(0,7)+" "+unidad);
             }
         });
+    }
+    public static void hideKeyboard(Activity activity) {
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        //Find the currently focused view, so we can grab the correct window token from it.
+        View view = activity.getCurrentFocus();
+        //If no view currently has focus, create a new one, just so we can grab a window token from it
+        if (view == null) {
+            view = new View(activity);
+        }
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
 
