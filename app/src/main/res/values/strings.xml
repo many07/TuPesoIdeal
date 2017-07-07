@@ -1,0 +1,34 @@
+<resources>
+    <string name="app_name">Tu Peso Ideal</string>
+    <string name="entrada">Unidad</string>
+    <string name="titulo_peso">Peso</string>
+    <string name="hint_peso">Ingrese su masa aquí</string>
+    <string name="titulo_altura">Estatura</string>
+    <string name="hint_estatura_mts">Ingrese su estatura aquí</string>
+    <string name="hint_estatura_pies">pies</string>
+    <string name="hint_estatura_pulgs">pulgs</string>
+    <string name="text_boton_calcular">Calcular mi Peso Ideal</string>
+    <string name="titulo_imc">I.M.C.:</string>
+    <string name="titulo_condicion">Condición:</string>
+    <string name="titulo_peso_recomendado">Peso Recomendado:</string>
+    <string name="condicion_indefinido">Indefinido</string>
+    <string name="condicion_bajo_peso">Bajo Peso</string>
+    <string name="condicion_normal">Normal</string>
+    <string name="condicion_obesidad">Obesidad</string>
+    <string name="condicion_obesidad_grado_1">Obesidad Grado I</string>
+    <string name="condicion_obesidad_grado_2">Obisidad Grado II</string>
+    <string name="condicion_obesidad_grado_3">Obesidad Grado III</string>
+    <string-array name="unidad_de_medida_altura">
+        <item>mts</item>
+        <item>pies</item>
+    </string-array>
+    <string-array name="unidad_de_medida_peso">
+        <item>kgs</item>
+        <item>lbs</item>
+    </string-array>
+    <string-array name="complexion">
+        <item>Pequeña</item>
+        <item>Mediana</item>
+        <item>Grande</item>
+    </string-array>
+</resources>
