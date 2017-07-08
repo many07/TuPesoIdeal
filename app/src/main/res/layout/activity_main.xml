@@ -77,23 +77,9 @@
             android:layout_height="wrap_content"
             android:layout_width="0dp"
             android:layout_weight="2"
-            android:entries="@array/unidad_de_medida_altura"
-            android:prompt="@string/entrada"/>
+            android:entries="@array/unidad_de_medida_altura"/>
     </LinearLayout>
-    <TextView
-        style="@style/titulos"
-        android:text="@string/complexion"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:textStyle="bold"/>
-    <Spinner
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:entries="@array/complexion"
-        android:prompt="@string/entrada"/>
+
     <Button
         style="@style/boton_resultados"
         android:id="@+id/boton_calcular"
@@ -159,6 +145,24 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:id="@+id/resultado_peso_recomendado"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                style="@style/layout_resultados"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/titulo_consejo"/>
+            <TextView
+                style="@style/titulo_resultados"
+                android:text=""
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:id="@+id/resultado_consejo"/>
         </LinearLayout>
     </LinearLayout>
 

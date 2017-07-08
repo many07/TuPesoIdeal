@@ -119,20 +119,31 @@ public class MainActivity extends AppCompatActivity{
                 imcTextView.setText(String.valueOf(imc));
                 //Se asigna la condicion correspondiente
                 TextView condicionTextView = (TextView) findViewById(R.id.resultado_condicion);
+                TextView consejoTextView = (TextView) findViewById(R.id.resultado_consejo);
                 if(imc==0){
                     condicionTextView.setText(R.string.condicion_indefinido);
+                    consejoTextView.setText(R.string.consejo_indefinido);
                 } else if(imc<18){
                     condicionTextView.setText(R.string.condicion_bajo_peso);
+                    consejoTextView.setText(R.string.consejo_bajo_peso);
                 }else if(imc<25) {
                     condicionTextView.setText(R.string.condicion_normal);
+                    consejoTextView.setText(R.string.consejo_normal);
                 }else if(imc<27){
                     condicionTextView.setText(R.string.condicion_obesidad);
+                    consejoTextView.setText(R.string.consejo_obesidad);
                 }else if(imc<30){
                     condicionTextView.setText(R.string.condicion_obesidad_grado_1);
+                    consejoTextView.setText(R.string.consejo_obesidad_grado_1);
                 }else if(imc<30){
                     condicionTextView.setText(R.string.condicion_obesidad_grado_2);
-                }else{
+                    consejoTextView.setText(R.string.consejo_obesidad_grado_2);
+                }else if(imc<40){
                     condicionTextView.setText(R.string.condicion_obesidad_grado_3);
+                    consejoTextView.setText(R.string.consejo_obesidad_grado_3);
+                }else{
+                    condicionTextView.setText(R.string.condicion_obesidad_extrema);
+                    consejoTextView.setText(R.string.consejo_obesidad_extrema);
                 }
                 resultados.setVisibility(View.VISIBLE);
                 double minimoRecomendado = 18*estatura*estatura;
