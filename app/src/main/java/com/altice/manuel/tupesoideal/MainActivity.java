@@ -14,6 +14,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+
 public class MainActivity extends AppCompatActivity{
 
 
@@ -116,7 +119,9 @@ public class MainActivity extends AppCompatActivity{
                 double imc = masa/(estatura*estatura);
                 //Se escribe el resultado en el View correspondiente
                 TextView imcTextView = (TextView) findViewById(R.id.resultado_imc);
-                imcTextView.setText(String.valueOf(imc));
+                NumberFormat df = DecimalFormat.getInstance();
+                df.setMaximumFractionDigits(4);
+                imcTextView.setText(df.format(imc));
                 //Se asigna la condicion correspondiente
                 TextView condicionTextView = (TextView) findViewById(R.id.resultado_condicion);
                 TextView consejoTextView = (TextView) findViewById(R.id.resultado_consejo);
@@ -155,7 +160,7 @@ public class MainActivity extends AppCompatActivity{
                     unidad = "lbs";
                 }
                 TextView pesoRecomendado = (TextView) findViewById(R.id.resultado_peso_recomendado);
-                pesoRecomendado.setText("Entre "+String.valueOf(minimoRecomendado).substring(0,7)+" "+unidad+" y "+String.valueOf(maximoRecomendado).substring(0,7)+" "+unidad);
+                pesoRecomendado.setText("Entre "+df.format(minimoRecomendado)+" "+unidad+" y "+df.format(maximoRecomendado)+" "+unidad);
             }
         });
     }
