@@ -24,11 +24,13 @@ public class MainActivity extends AppCompatActivity{
     Button botonResultados;
     boolean masaEnLibras; //False significa kgs y true significa libras
     boolean estaturaEnPies; //False significa kms y True significa pies, pulgs
+    Usuario usuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        usuario = new Usuario();
         masaEnLibras = false;
         estaturaEnPies = false;
         //Se obtiene el LinearLayout que mostrará los resultados
@@ -55,6 +57,7 @@ public class MainActivity extends AppCompatActivity{
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 //Se esconden las vistas de libras o de kilogramos
+                estaturaEnPies = position == 1;
                 esconderVistas(position);
             }
 
@@ -108,7 +111,6 @@ public class MainActivity extends AppCompatActivity{
             int pulgs = Integer.parseInt(estaturaPulgsEntry.getText().toString());
 
             estatura = (pies*12)+pulgs;
-            estatura = estatura*0.0254;
 
         }else{
             EditText estaturaEntry = (EditText) findViewById(R.id.estatura_mts_entry);
@@ -117,79 +119,44 @@ public class MainActivity extends AppCompatActivity{
         return estatura;
     }
 
-    private void presentarResultados(){
+    private void presentarResultados() {
         //Se esconde el teclado una clickeado el botón
         hideKeyboard(MainActivity.this);
-        resultados.setVisibility(View.GONE);
+
         double estatura;
         //Se toman los datos de estatura ingresados por el usuario
 
+
         try {
+            //EditText estaturaEntry = (EditText) findViewById(R.id.estatura_mts_entry);
             estatura = calcularEstatura();
-        }catch (Exception e){
-            Toast.makeText(MainActivity.this, "Debes ingresar tu estatura",Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            Toast.makeText(MainActivity.this, "Debes ingresar tu estatura", Toast.LENGTH_SHORT).show();
+            resultados.setVisibility(View.GONE);
             return;
         }
-
-
-
-        //Se toman los datos de masa ingresados por el usuario
         EditText masaEntry = (EditText) findViewById(R.id.masa_entry);
         double masa;
-        try{
+        try {
             masa = Double.parseDouble(masaEntry.getText().toString());
-        }catch (Exception ex){
+        } catch (Exception ex) {
             masa = 0;
         }
-        if(masaEnLibras){
-            masa=masa*0.4536;
-        }
-
-        //Se calcula el índice de masa corporal
-        double imc = masa/(estatura*estatura);
+        usuario.calcularResultados(masa, estatura, masaEnLibras, estaturaEnPies);
         //Se escribe el resultado en el View correspondiente
         TextView imcTextView = (TextView) findViewById(R.id.resultado_imc);
         NumberFormat df = DecimalFormat.getInstance();
         df.setMaximumFractionDigits(4);
-        imcTextView.setText(df.format(imc));
+        imcTextView.setText(df.format(usuario.getImc()));
         //Se asigna la condicion correspondiente
         TextView condicionTextView = (TextView) findViewById(R.id.resultado_condicion);
         TextView consejoTextView = (TextView) findViewById(R.id.resultado_consejo);
-        if(imc==0){
-            condicionTextView.setText(R.string.condicion_indefinido);
-            consejoTextView.setText(R.string.consejo_indefinido);
-        } else if(imc<18){
-            condicionTextView.setText(R.string.condicion_bajo_peso);
-            consejoTextView.setText(R.string.consejo_bajo_peso);
-        }else if(imc<25) {
-            condicionTextView.setText(R.string.condicion_normal);
-            consejoTextView.setText(R.string.consejo_normal);
-        }else if(imc<27){
-            condicionTextView.setText(R.string.condicion_obesidad);
-            consejoTextView.setText(R.string.consejo_obesidad);
-        }else if(imc<30){
-            condicionTextView.setText(R.string.condicion_obesidad_grado_1);
-            consejoTextView.setText(R.string.consejo_obesidad_grado_1);
-        }else if(imc<30){
-            condicionTextView.setText(R.string.condicion_obesidad_grado_2);
-            consejoTextView.setText(R.string.consejo_obesidad_grado_2);
-        }else if(imc<40){
-            condicionTextView.setText(R.string.condicion_obesidad_grado_3);
-            consejoTextView.setText(R.string.consejo_obesidad_grado_3);
-        }else{
-            condicionTextView.setText(R.string.condicion_obesidad_extrema);
-            consejoTextView.setText(R.string.consejo_obesidad_extrema);
-        }
-        resultados.setVisibility(View.VISIBLE);
-        double minimoRecomendado = 18*estatura*estatura;
-        double maximoRecomendado = 24.9*estatura*estatura;
-        String unidad = "kgs";
-        if(masaEnLibras){
-            minimoRecomendado=minimoRecomendado*2.2;
-            maximoRecomendado=maximoRecomendado*2.2;
-            unidad = "lbs";
-        }
+        condicionTextView.setText(usuario.getCondicion());
+        consejoTextView.setText(usuario.getConsejo());
         TextView pesoRecomendado = (TextView) findViewById(R.id.resultado_peso_recomendado);
-        pesoRecomendado.setText("Entre "+df.format(minimoRecomendado)+" "+unidad+" y "+df.format(maximoRecomendado)+" "+unidad);
+
+        pesoRecomendado.setText("Entre " + df.format(usuario.getMinimoRecomendado()) + " " + usuario.getUnidad() + " y " + df.format(usuario.getMaximoRecomendado()) + " " + usuario.getUnidad());
+        resultados.setVisibility(View.VISIBLE);
+        Toast.makeText(MainActivity.this, String.valueOf(masaEnLibras), Toast.LENGTH_SHORT).show();
     }
 }
